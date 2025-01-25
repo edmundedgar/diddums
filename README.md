@@ -10,7 +10,7 @@ This tool was created for doing abhorrent things with the DID history mainly for
 
 In particular take a look at [Goat](https://github.com/bluesky-social/indigo/blob/main/cmd/goat/README.md).
 
-If you're just tinkering around, nothing bad should happen as long as you don't run it with the `--broadcast` flag. But I've barely tested it so YMMV.
+If you're just tinkering around, nothing bad should happen as long as you don't run it with the `--broadcast` flag.
 
 ## Installation
 
