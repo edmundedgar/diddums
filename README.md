@@ -46,6 +46,8 @@ Once you've stored your keys in your `pk` directory you can refer to them either
 
 ## Usage
 
+Run `python diddums.py --help` for all the options.
+
 To update an existing DID, run `python diddums.py --did did:plc:something` where `did:plc:something`: is the DID you want to update. Pass additional arguments for the things you want to change. Diddums will output the signed entry in a file. If you add the argument `--broadcast https://plc.directory` it will attempt to submit it to the public directory.
 
 Normally you will want to add your entry after the latest one. Diddums will get this automatically from the directory. If you want to update an earlier entry, you can pass the `prev` argument with the CID of the entry you want to update. This is only useful for testing or evil purposes; If you try to send it to the public directory it should reject it.
@@ -58,7 +60,7 @@ If you don't supply a DID, Diddums will try to create a new directory entry. Thi
 
     python diddums.py --did did:plc:ee7kjipyhx3cf6nmh2l5scbl --alsoKnownAs 'at://my.domain.example.com'
 
-Note (once broadcast) that this only updates the DID registry. You need further steps to prove to the world that you own `my.domain.example.com`.
+Note that (once broadcast) this only updates the DID registry. You need further steps to prove to the world that you own `my.domain.example.com`.
 
 ### Set your rotation key to did:key:zQ3shrBmk4hva9E1Sdag7jG9up32oJd8DWfv8mHs96ug8abP1:
 
@@ -66,7 +68,7 @@ Note (once broadcast) that this only updates the DID registry. You need further 
 
 ### Set 3 rotation keys based on keys in files your pk/ directory:
 
-    python diddums.py --did did:plc:ee7kjipyhx3cf6nmh2l5scbl --rotationKeys pk/mykey1 pk/mykey2 pk/mykey3
+    python diddums.py --did did:plc:ee7kjipyhx3cf6nmh2l5scbl --rotationKeys pk/mykey1,pk/mykey2,pk/mykey3
 
 ### Set your verification key to a file in your pk/ directory:
 
