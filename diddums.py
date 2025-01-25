@@ -1,13 +1,3 @@
-# This is a script to prepare the payload used by SkeetGateway.handleSkeet()
-
-# It outputs a json file with what it found under out/.
-
-# It assumes certain things about the result we get from the PDS (especially the record order) that aren't guaranteed by the spec. 
-# If these are wrong it will error out.
-
-# The records it fetches from various APIs are cached to disk to avoid hitting the same API endpoint repeatedly.
-# The data you get when making a fresh request may be different to what is saved to disk, although a payload generated from a previous cached request will still be valid.
-
 import priv_hex_to_did_key
 
 import os
