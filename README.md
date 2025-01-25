@@ -30,11 +30,11 @@ Install the requirements
 
 Now you can run diddums and see the options:
 
-    python diddums --help
+    python diddums.py --help
 
 ## Private keys
 
-To sign updates to your DID history, you need one of the private keys currently listed in the previous update. You can see these listed in the final entry of your audit log, eg the log for the DID `did:plc:pyzlzqt6b2nyrha7smfry6rv` can be found at [https://plc.directory/did:plc:pyzlzqt6b2nyrha7smfry6rv/log/audit](https://plc.directory/did:plc:pyzlzqt6b2nyrha7smfry6rv/log/audit)
+To sign updates to your DID history, you need the private key to one of the rotation keys currently listed in the previous update. You can see these listed in the final entry of your audit log, eg the log for the DID `did:plc:pyzlzqt6b2nyrha7smfry6rv` can be found at [https://plc.directory/did:plc:pyzlzqt6b2nyrha7smfry6rv/log/audit](https://plc.directory/did:plc:pyzlzqt6b2nyrha7smfry6rv/log/audit)
 
 By default Diddums expects them to be in a directory called `pk`.
 
@@ -67,7 +67,7 @@ If you don't supply a DID, Diddums will try to create a new directory entry. Thi
 
 Note that (once broadcast) this only updates the DID registry. You need further steps to prove to the world that you own `my.domain.example.com`.
 
-### Set your rotation key to did:key:zQ3shrBmk4hva9E1Sdag7jG9up32oJd8DWfv8mHs96ug8abP1:
+### Set your rotation key to the specified did pubkey
 
     python diddums.py --did did:plc:ee7kjipyhx3cf6nmh2l5scbl --rotationKeys did:key:zQ3shrBmk4hva9E1Sdag7jG9up32oJd8DWfv8mHs96ug8abP1
 
