@@ -36,7 +36,7 @@ To sign updates to your DID history, you need one of the private keys currently 
 
 By default Diddums expects them to be in a directory called `pk`.
 
-Private keys are 32 bytes long, or 64 characters when written out in hexadecimal. Each key should be its own file with a single line, prefixed with `0x`. You can generate a new one with something like `echo "0x`openssl rand -hex 32``" > pk/mykey``.
+Private keys are 32 bytes long, or 64 characters when written out in hexadecimal. Each key should be its own file with a single line, prefixed with `0x`. You can generate a new one with something like `echo "0x``openssl rand -hex 32``" > pk/mykey`.
 
 If you're running your own PDS, you can find the default rotation key used to sign updates of accounts you create on that PDS in the `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX` entry of `/pds/pds.env`. You'll need to add the `0x` to the beginning.
 
