@@ -1,5 +1,7 @@
 # Diddums
 
+(Edmund Edgar [@goat.navy](https://bsky.app/profile/goat.navy]) ), 2025-01
+
 A simple tool for manipulating atproto DID histories
 
 ## You probably shouldn't be using this
