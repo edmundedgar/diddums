@@ -44,6 +44,9 @@ Your own PDS will also store the verification keys (used for signing off on skee
 
 Once you've stored your keys in your `pk` directory you can refer to them either by their full name (pubkey) like `did:key:zQ3shrBmk4hva9E1Sdag7jG9up32oJd8DWfv8mHs96ug8abP1` or by the path to the file like `pk/mykey`.
 
+You can get the DID key of a private key by running the accompanying script `priv_hex_to_did_key.py`, eg `python priv_hex_to_did_key.py pk/mykey`.
+
+
 ## Usage
 
 Run `python diddums.py --help` for all the options.
