@@ -34,9 +34,6 @@ def signUpdate(entry, priv_hex):
 
     sighash = hashlib.sha256(libipld.encode_dag_cbor(entry)).digest()
 
-    #print("sighash is")
-    #print(sighash.hex())
-
     pk = keys.PrivateKey(bytes.fromhex(priv_hex[2:]))
     sig = pk.sign_msg_hash(sighash)
     rs = bytearray(sig.r.to_bytes(32, byteorder='big'))
@@ -50,8 +47,6 @@ def signUpdate(entry, priv_hex):
 
     return new_entry
 
-# This is given to us already when we load an entry from the directory
-# But if we made the entry ourselves we will need to calculate it
 def calculateCid(entry):
     prepend = bytes.fromhex("01711220")
     hash_bytes = hashlib.sha256(libipld.encode_dag_cbor(entry)).digest()
@@ -90,7 +85,6 @@ def formatAlsoKnownAs(urls):
             raise Exception("Endpoint parameter did not look like an at:// URI")
     return urls
 
-# populate an entry, defaulting to the values in from_entry
 def populateEntry(entry, args, prev_cid):
 
     entry = copy.deepcopy(entry)
@@ -145,17 +139,22 @@ if __name__ == '__main__':
     entry = None
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--keys", default="./pk", help="path to directory containing private keys")
-    parser.add_argument("--history", help="output a full history not just the single entry")
+
+    parser.add_argument("--did", help="DID to update (omit for a new DID)")
+
+    parser.add_argument("--prev", help="CID of the entry we will update. (Omit to just use the latest in the directory)")
+    parser.add_argument("--prev_idx", type=int, help="--prev but specified by the index of the entry in the history instead of its CID")
+
+    parser.add_argument("--endpoint", help="Endpoint to set (the URL of your PDS)")
+    parser.add_argument("--rotationKeys", type=lambda arg: arg.split(','), help="Comma-delimited list of rotation keys to set")
+    parser.add_argument("--alsoKnownAs", type=lambda arg: arg.split(','), help="Comma-delimited list of handles (also known as) to set")
+    parser.add_argument("--verificationMethod", help="Verification key to set")
+
+    parser.add_argument("--keys", default="./pk", help="Path to directory containing private keys")
+    parser.add_argument("--out", help="File name to which to output")
+    parser.add_argument("--history", help="Output a full history not just the single entry")
+
     parser.add_argument("--broadcast", help="broadcast to the specified server eg https://plc.directory")
-    parser.add_argument("--out", help="file name to which to output")
-    parser.add_argument("--did", help="did to update (omit for a new did")
-    parser.add_argument("--prev", help="cid of previous update")
-    parser.add_argument("--prev_idx", type=int, help="index in history of previous update")
-    parser.add_argument("--endpoint", help="endpoint to set")
-    parser.add_argument("--rotationKeys", type=lambda arg: arg.split(','), help="comma-delimited list of rotation keys")
-    parser.add_argument("--alsoKnownAs", type=lambda arg: arg.split(','), help="comma-delimited list of handles (also known as)")
-    parser.add_argument("--verificationMethod", help="verification key to set")
     args = parser.parse_args()
 
     param_did = args.did
@@ -227,7 +226,6 @@ if __name__ == '__main__':
                 break
 
         if not is_entry_found:
-            # TODO: Maybe you want to do this anyhow
             raise Exception("Could not find specified prev in history")
 
     #print(available_keys)
@@ -244,8 +242,6 @@ if __name__ == '__main__':
         print(available_keys)
         exit()
 
-    #print("sign:")
-    #print(entry)
     signed_entry = signUpdate(entry, priv_hex)
     update_cid = calculateCid(signed_entry)
 
@@ -258,8 +254,8 @@ if __name__ == '__main__':
     if args.history is not None and int(args.history) > 0:
         output = relevant_history
 
-    # Format this like the did audit log so we can check it with the same tooling
-    # We'll leave off the createdAt and nullified fields
+    # We format this like the did audit log so we can check it with the same tooling
+    # createdAt is assigned by the directory server when it receives the update
     output.append({
         "did": did,
         "operation": signed_entry,
