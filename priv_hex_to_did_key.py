@@ -43,11 +43,10 @@ def privHexToDidKey(key_hex):
 
     return "did:key:z" + str(b58encoded.decode('utf-8'))
 
-
 if __name__ == '__main__':
 
-    if len(sys.argv) < 2:
-        raise Exception("Usage: python did_tool.py <pk file>")
+    if len(sys.argv) != 2:
+        raise Exception("Usage: python priv_hex_to_did_key.py <pk file>")
 
     key_file = sys.argv[1]
     did_key = privHexFileToDidKey(key_file)
