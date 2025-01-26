@@ -34,20 +34,25 @@ Now you can run diddums and see the options:
 
 ## Private keys
 
-To sign updates to your DID history, you need the private key to one of the rotation keys currently listed in the previous update. You can see these listed in the final entry of your audit log, eg the log for the DID `did:plc:pyzlzqt6b2nyrha7smfry6rv` can be found at [https://plc.directory/did:plc:pyzlzqt6b2nyrha7smfry6rv/log/audit](https://plc.directory/did:plc:pyzlzqt6b2nyrha7smfry6rv/log/audit)
+Private keys are 32 bytes long, or 64 characters when written out in hexadecimal. Each key should be its own file with a single line, prefixed with `0x`. You can generate a new one with something like ``echo "0x`openssl rand -hex 32`" > pk/mykey``.
 
 By default Diddums expects them to be in a directory called `pk`.
 
-Private keys are 32 bytes long, or 64 characters when written out in hexadecimal. Each key should be its own file with a single line, prefixed with `0x`. You can generate a new one with something like ``echo "0x`openssl rand -hex 32`" > pk/mykey``.
-
-If you're running your own PDS, you can find the default rotation key used to sign updates of accounts you create on that PDS in the `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX` entry of `/pds/pds.env`. You'll need to add the `0x` to the beginning.
-
-Your own PDS will also be storing the verification keys (used for signing off on skeets) for its users. These are in places like `/pds/actors/5c/did\:plc\:mtq3e4mgt7wyjhhaniezej67/key`. You can output these as hex with something like `python3 -c "print(open('./key', 'rb').read().hex())"`. Then add the `0x` to the beginning.
+Keys in the PLC directory are referred to by their pubkeys in [did:key](https://w3c-ccg.github.io/did-method-key/) format. You can find out the did:key pubkey of one of your private keys by running the accompanying script `priv_hex_to_did_key.py`, eg `python priv_hex_to_did_key.py pk/mykey`.
 
 Once you've stored your keys in your `pk` directory you can refer to them either by their full name (pubkey) like `did:key:zQ3shrBmk4hva9E1Sdag7jG9up32oJd8DWfv8mHs96ug8abP1` or by the path to the file like `pk/mykey`.
 
-Keys in the PLC directory are referred to by their pubkeys in [did:key](https://w3c-ccg.github.io/did-method-key/) format. You can find out the did:key pubkey of one of your private keys by running the accompanying script `priv_hex_to_did_key.py`, eg `python priv_hex_to_did_key.py pk/mykey`.
+### Rotation keys
 
+To sign updates to your DID history, you need the private key to one of the rotation keys currently listed in the previous update. You can see these listed in the final entry of your audit log, eg the log for the DID `did:plc:pyzlzqt6b2nyrha7smfry6rv` can be found at [https://plc.directory/did:plc:pyzlzqt6b2nyrha7smfry6rv/log/audit](https://plc.directory/did:plc:pyzlzqt6b2nyrha7smfry6rv/log/audit)
+
+If you're running your own PDS, you can find the default rotation key used to sign updates of accounts you create on that PDS in the `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX` entry of `/pds/pds.env`. You'll need to add the `0x` to the beginning.
+
+### Verification keys
+
+If you're running your own PDS it will also be storing the verification keys (used for signing off on skeets) for its users. These are in places like `/pds/actors/5c/did\:plc\:mtq3e4mgt7wyjhhaniezej67/key`. You can output these as hex with something like `python3 -c "print(open('./key', 'rb').read().hex())"`. Then add the `0x` to the beginning.
+
+You don't sign with these for DID operations, unless you've set your DID to use the same key as a rotation key.
 
 ## Usage
 
