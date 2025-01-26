@@ -88,6 +88,6 @@ Note that this doesn't actually give your PDS the key, so you need extra steps b
 
 ### Change your PDS to mypds.example.com
 
-    python diddums.py --did did:plc:ee7kjipyhx3cf6nmh2l5scbl --endpoint mypds.example.com
+    python diddums.py --did did:plc:ee7kjipyhx3cf6nmh2l5scbl --endpoint https://mypds.example.com
 
 Note that this doesn't do anything to make sure you actually have an account on the PDS `mypds.example.com`.
