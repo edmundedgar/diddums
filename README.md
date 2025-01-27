@@ -32,7 +32,7 @@ Now you can run diddums and see the options:
 
 ## Private keys
 
-Private keys are 32 bytes long, or 64 characters when written out in hexadecimal. Diddums expects each key you sign with to be its own file with a single line, prefixed with `0x`. You can generate a new one with something like ``echo "0x`openssl rand -hex 32`" > pk/mykey``.
+Private keys are 32 bytes long. Diddums expects to find key you sign with encoded in hexadecimal (so 64 characters) prefixed with `0x`, and stored in its own file containing a single line. You can generate a new one with something like ``echo "0x`openssl rand -hex 32`" > pk/mykey``.
 
 By default Diddums expects them to be in a directory called `pk`.
 
