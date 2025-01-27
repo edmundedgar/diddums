@@ -6,9 +6,7 @@ A simple tool for manipulating atproto DID histories
 
 ## You probably shouldn't be using this
 
-This tool was created for doing abhorrent things with the DID history mainly for the purpose of testing, for example making weird forks of the history that shouldn't normally exist. Although in theory it could be used for normal purposes like account migration, you're probably better off using tools designed for that purpose.
-
-In particular take a look at [Goat](https://github.com/bluesky-social/indigo/blob/main/cmd/goat/README.md).
+This is a simple tool for adding entries to the DID history, and nothing else. Most normal operations also involve setting something other than the DID history, for example adding an account to a PDS or verifying a domain. Consider using a tool like [Goat](https://github.com/bluesky-social/indigo/blob/main/cmd/goat/README.md) that will also handle these other settings and make sure they are consistent with what you are doing to the DID history.
 
 If you're just tinkering around, nothing bad should happen as long as you don't run it with the `--broadcast` flag.
 
