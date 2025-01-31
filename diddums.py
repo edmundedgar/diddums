@@ -1,6 +1,7 @@
 import priv_hex_to_did_key
 
 import os
+import sys
 import urllib.request
 import requests
 import json
@@ -156,6 +157,10 @@ if __name__ == '__main__':
 
     parser.add_argument("--broadcast", help="broadcast to the specified server eg https://plc.directory")
     args = parser.parse_args()
+
+    if len(sys.argv) < 2:
+        parser.print_help()
+        sys.exit(1)
 
     param_did = args.did
     param_prev = args.prev
