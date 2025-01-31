@@ -58,7 +58,7 @@ Run `python diddums.py --help` for all the options.
 
 To update an existing DID, run `python diddums.py --did did:plc:something` where `did:plc:something` is the DID you want to update. Pass additional arguments for the things you want to change. Diddums will output the signed entry in a file. If you add the argument `--broadcast https://plc.directory` it will attempt to submit it to the public directory.
 
-Normally you will want to add your entry after the latest one. Diddums will get this automatically from the directory. If you want to update an earlier entry, you can pass the `prev` argument with the CID of the entry you want to update. This is only useful for testing or evil purposes; If you try to send it to the public directory it should reject it.
+Normally you will want to add your entry after the latest one. Diddums will get this automatically from the directory. If you want to update an earlier entry, you can pass the `prev` argument with the CID of the entry you want to update. This has one normal purpose, reversing an update that was sent to the directory in the last 72 hours with a higher-priority rotation key. Other than that, it is only useful for testing or evil purposes, and if you try to send it to the directory server it should be rejected.
 
 If you don't supply a DID, Diddums will try to create a new directory entry. This will require you to provide values for all the fields that need to go in the DID.
 
