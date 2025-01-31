@@ -31,6 +31,14 @@ def loadHistory(did):
     with open(plc_file, mode="rb") as cf:
         return json.load(cf)
 
+def loadHistoryFromJson(entry_file):
+
+    if not os.path.exists(entry_file):
+        raise Exception("File specified in --prev_json not found")
+
+    with open(entry_file, mode="rb") as cf:
+        return json.load(cf)
+
 def signUpdate(entry, priv_hex):
 
     sighash = hashlib.sha256(libipld.encode_dag_cbor(entry)).digest()
@@ -145,6 +153,7 @@ if __name__ == '__main__':
 
     parser.add_argument("--prev", help="CID of the entry we will update. (Omit to just use the latest in the directory)")
     parser.add_argument("--prev_idx", type=int, help="--prev but specified by the index of the entry in the history instead of its CID")
+    parser.add_argument("--prev_json", type=str, help="loaded the previous update from a file instead of the directory")
 
     parser.add_argument("--endpoint", help="Endpoint to set (the URL of your PDS)")
     parser.add_argument("--rotationKeys", type=lambda arg: arg.split(','), help="Comma-delimited list of rotation keys to set")
@@ -183,7 +192,10 @@ if __name__ == '__main__':
         available_keys = entry['rotationKeys']
 
     else:
-        did_history = loadHistory(did)
+        if args.prev_json is not None:
+            did_history = loadHistoryFromJson(args.prev_json)
+        else:
+            did_history = loadHistory(did)
 
         if args.prev is not None:
             prev_cid = args.prev
