@@ -31,6 +31,11 @@ def loadHistory(did):
     with open(plc_file, mode="rb") as cf:
         return json.load(cf)
 
+def clearCache(did):
+    plc_file = PLC_CACHE + '/' + hashlib.sha256(did.encode()).hexdigest() + '.plc'
+    if os.path.exists(plc_file):
+        os.remove(plc_file)
+
 def loadHistoryFromJson(entry_file):
 
     if not os.path.exists(entry_file):
@@ -298,3 +303,4 @@ if __name__ == '__main__':
         r = requests.post(url, json=signed_entry)
         print("Directory response:")
         print(r.status_code)
+        clearCache(did)
