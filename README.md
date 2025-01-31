@@ -46,6 +46,8 @@ To sign updates to your DID history, you need the private key to one of the rota
 
 If you're running your own PDS, you can find the default rotation key used to sign updates of accounts you create on that PDS in the `PDS_PLC_ROTATION_KEY_K256_PRIVATE_KEY_HEX` entry of `/pds/pds.env`. You'll need to add the `0x` to the beginning.
 
+Diddums will find the key it needs to sign your update automatically, unless you specify it with `--signer`.
+
 ### Verification keys
 
 If you're running your own PDS it will also be storing the verification keys (used for signing off on skeets) for its users. These are in places like `/pds/actors/5c/did\:plc\:mtq3e4mgt7wyjhhaniezej67/key`. You can output these as hex with something like `python3 -c "print(open('./key', 'rb').read().hex())"`. Then add the `0x` to the beginning.

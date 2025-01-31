@@ -160,6 +160,8 @@ if __name__ == '__main__':
     parser.add_argument("--prev_idx", type=int, help="--prev but specified by the index of the entry in the history instead of its CID")
     parser.add_argument("--prev_json", type=str, help="loaded the previous update from a file instead of the directory")
 
+    parser.add_argument("--signer", help="did:key name or pk file path for the key you want to sign with (normally this is chosen automatically)")
+
     parser.add_argument("--endpoint", help="Endpoint to set (the URL of your PDS)")
     parser.add_argument("--rotationKeys", type=lambda arg: arg.split(','), help="Comma-delimited list of rotation keys to set")
     parser.add_argument("--alsoKnownAs", type=lambda arg: arg.split(','), help="Comma-delimited list of handles (also known as) to set")
@@ -250,19 +252,30 @@ if __name__ == '__main__':
         if not is_entry_found:
             raise Exception("Could not find specified prev in history")
 
+    force_signer = None
+    if args.signer is not None:
+        force_signer = formatKeyParam(args.signer)
+
     #print(available_keys)
     priv_hex = None
     for available_key in available_keys:
+        if force_signer is not None and force_signer != available_key:
+            continue
         priv_hex = priv_hex_to_did_key.privHexForDidKey(available_key, args.keys)
         if priv_hex is not None:
             print("Found the usable key "+available_key)
             break
 
     if priv_hex is None:
-        print("Could not find a key")
-        print("Needed one of:")
-        print(available_keys)
-        exit()
+        if force_signer is not None:
+            print("Could not find the key you specified in the previous update")
+            print(force_signer)
+            exit()
+        else:
+            print("Could not find a key")
+            print("Needed one of:")
+            print(available_keys)
+            exit()
 
     signed_entry = signUpdate(entry, priv_hex)
     update_cid = calculateCid(signed_entry)
